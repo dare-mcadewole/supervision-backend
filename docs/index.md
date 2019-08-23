@@ -3,7 +3,7 @@
 ----
 
 >Anti-Vandalism Supervisory Panel  
-(Remote Surveillance with System control)
+(Remote Surveillance with System control)  
 
 ## API Endpoints
 ***
@@ -28,7 +28,7 @@
 
 
 ## Author(s)
-----
+----  
 
 - Dare McAdewole
->>Software Developer  [@dare_mcadewole](https://twitter.com/@dare_mcadewole)  [Gmail](mailto:dare.dev.adewole@gmail.com)
+>Software Developer  [@dare_mcadewole](https://twitter.com/@dare_mcadewole)  [Gmail](mailto:dare.dev.adewole@gmail.com)
