@@ -1,0 +1,7 @@
+
+export default {
+    ALARM: 'ALARM',
+    PROTECT_ZONE: 'PROTECT_ZONE',
+    OVERRIDE: 'OVERRIDE',
+    AUTO_PROTECT: 'AUTO_PROTECT'
+}

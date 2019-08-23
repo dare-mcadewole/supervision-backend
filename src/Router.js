@@ -8,19 +8,12 @@
  * Description:
  *       Router for RESTIFY web server
  */
-import WMSSocket from './WMSSocket';
+import Socket from './Socket';
 import Logger from './Logger';
-import TerminalController from './controllers/TerminalController';
-import TankController from './controllers/TankController';
-import BillingController from './controllers/BillingController';
-import ValveController from './controllers/ValveController';
+import ZoneController from './controllers/ZoneController';
+import VideoController from './controllers/VideoController';
 
-let Authorize = (req, res, next) => {
-    if (req.header('Authorization') !== `Bearer ${process.env.AUTH_KEY}`) {
-        return reply.send(403, { msg: 'UNAUTHORIZED' });
-    }
-    return next();
-};
+const zones = [1, 2, 3];
 
 var idValidation = (req, reply, next, param, includesArray) => {
     var id = parseInt(req.params[param]);
@@ -37,66 +30,42 @@ export default class Router {
      * @param {*} ServerInstance
      */
     static initRoutes (App, ServerInstance) {
-        Logger.info('Initializing WMS Routes ... ');
-        // Initialize and setup WMSSocket
-        WMSSocket.initialize(ServerInstance);
+        Logger.info('Initializing Super+Vision Routes ... ');
+        // Initialize and setup Socket
+        Socket.initialize(ServerInstance);
 
         App.get('/api', (req, reply, next) => {
             reply.send({
-                name: 'Water Supervisory Control API',
-                version: '2.5'
+                name: 'Super+Vision API',
+                version: '2.0'
             });
             return next();
         });
 
-        App.get(
-            '/api/valve/:terminal_id',
-            (req, reply, next) => idValidation(req, reply, next, 'terminal_id', [1, 2, 3, 4]),
-            ValveController.getValveState
+        App.put(
+            '/api/zone/:zone_id',
+            (req, reply, next) => idValidation(req, reply, next, 'zone_id', zones),
+            (req, reply, next) => ZoneController.setSensor(Socket, req, reply, next)
         );
 
         App.post(
-            '/api/terminal/:terminal_id',
-            (req, reply, next) => idValidation(req, reply, next, 'terminal_id', [1, 2, 3, 4]),
-            (req, reply, next) => TerminalController.updateTerminal(WMSSocket, req, reply, next)
+            '/api/zone/:zone_id/video',
+            (req, reply, next) => idValidation(req, reply, next, 'zone_id', zones),
+            (req, reply, next) => VideoController.sendImage(Socket, req, reply, next)
         );
 
-        // /api/terminal/state/:terminal_id
-        App.post(
-            '/api/terminal/state/:terminal_id',
-            (req, reply, next) => idValidation(req, reply, next, 'terminal_id', [1, 2, 3, 4]),
-            (req, reply, next) => TerminalController.updateTerminalState(WMSSocket, req, reply, next)
+        App.put(
+            '/api/zone/:zone_id/control',
+            (req, reply, next) => idValidation(req, reply, next, 'zone_id', zones),
+            (req, reply, next) => ZoneController.setControl(Socket, req, reply, next)
         );
 
-        // /api/tank/init
-        App.post(
-            '/api/tank/init',
-            TankController.initialize
+        App.put(
+            '/api/zone/:zone_id/alarm',
+            (req, reply, next) => idValidation(req, reply, next, 'zone_id', zones),
+            (req, reply, next) => ZoneController.setAlarmState(Socket, req, reply, next)
         );
 
-        // /api/tank/pump?
-        App.post(
-            '/api/tank/pump',
-            (req, reply, next) => {
-                TankController.setPumpState(WMSSocket, req, reply, next);
-            }
-        );
-
-        // /api/tank/level
-        App.post(
-            '/api/tank/level',
-            (req, reply, next) => {
-                TankController.setWaterLevel(WMSSocket, req, reply, next);
-            }
-        );
-
-        App.post(
-            '/api/terminal/billing/:terminal_id',
-            (req, reply, next) => idValidation(req, reply, next, 'terminal_id', [1, 2, 3, 4]),
-            (req, reply, next) => {
-                BillingController.updateBilling(WMSSocket, req, reply, next);
-            }
-        )
-        Logger.info('All WMS Routes Initialized successfully!');
+        Logger.info('All Super+Vision Routes Initialized successfully!');
     }
 }

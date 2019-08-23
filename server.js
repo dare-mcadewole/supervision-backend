@@ -10,16 +10,16 @@
  */
 // Import Environment Variables
 import Logger from './src/Logger';
-Logger.info('Loading WMS server configurations ... ');
+Logger.info(`Loading server configurations ... `);
 require('dotenv').config();
 import Express from 'express';
+import FileUpload from 'express-fileupload';
 import Http from 'http';
-import BodyParser from 'body-parser';
 import CORS from 'cors';
-import Multer from 'multer';
+import Auth from './src/middlewares/auth';
 
 var App = Express();
-Logger.info('WMS Server is booting up ... ');
+Logger.info(`${process.env.SERVER_NAME} Server is booting up ... `);
 var Server = Http.createServer(App);
 // sleep(700);
 
@@ -28,13 +28,16 @@ App.use(Express.json());
 App.use(Express.urlencoded({
     extended: true
 }));
+App.use(FileUpload({
+    createParentPath: true
+}));
 
 Logger.info('Setting up CORS middleware ... ');
 const corsOptions = {
     origin: '*',
     methods: 'GET,HEAD,POST,PUT',
     allowedHeaders: [
-        // 'Authorization',
+        'Authorization',
         'Content-Type',
         'X-Requested-With'
     ]
@@ -55,9 +58,10 @@ client.connect(err => {
         return;
     }
     Logger.info('MongoDB is connected!');
-    process.DB = client.db('wsc');
+    process.DB = client.db('super-vision');
 });
 
+App.use(Auth);
 // Initialize routes
 require('./src/Router').default.initRoutes(App, Server);
 

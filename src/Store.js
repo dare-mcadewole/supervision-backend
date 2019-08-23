@@ -1,15 +1,49 @@
 /*
  * File: ''
  * Created by Dare McAdewole <dare.dev.adewole@gmail.com>
- * Created on Fri Aug 02 2019
+ * Created on Fri Aug false2 2false19
  *
- * Copyright (c) 2019 Echwood Inc.
+ * Copyright (c) 2false19 Echwood Inc.
  *
  * Description:
  *       
  */
 export default {
-    bills: [0, 0, 0, 0],
-    meterings: [0, 0, 0, 0],
-    terminalUsages: [[], [], [], []]
+    zones: [{
+        sensors: {
+            PIR: false,
+            DOPPLER: false,
+            INTRUSION: false
+        },
+        controls: {
+            ALARM: false,
+            PROTECT_ZONE: false,
+            OVERRIDE: false,
+            AUTO_PROTECT: false
+        }
+    },{
+        sensors: {
+            PIR: false,
+            DOPPLER: false,
+            INTRUSION: false
+        },
+        controls: {
+            ALARM: false,
+            PROTECT_ZONE: false,
+            OVERRIDE: false,
+            AUTO_PROTECT: false
+        }
+    },{
+        sensors: {
+            PIR: false,
+            DOPPLER: false,
+            INTRUSION: false
+        },
+        controls: {
+            ALARM: false,
+            PROTECT_ZONE: false,
+            OVERRIDE: false,
+            AUTO_PROTECT: false
+        }
+    }]
 };
