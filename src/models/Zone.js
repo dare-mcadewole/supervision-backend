@@ -34,6 +34,24 @@ class Zone {
         });
     }
 
+    getControl ({ zone }) {
+        return new Promise((resolve, reject) => {
+            process.DB.collection('zone_controls').findOne({ zone }, (err, doc) => {
+                if (err) reject(err);
+                resolve(doc);
+            });
+        });
+    }
+
+    getAlarmState ({ zone }) {
+        return new Promise((resolve, reject) => {
+            process.DB.collection('zone_alarm').findOne({ zone }, (err, doc) => {
+                if (err) reject(err);
+                resolve(doc);
+            });
+        });
+    }
+
     setAlarmState ({ zone, state }) {
         return new Promise((resolve, reject) => {
             process.DB.collection('zone_alarm').findOneAndUpdate(

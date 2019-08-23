@@ -37,7 +37,7 @@ export default class Router {
         App.get('/api', (req, reply, next) => {
             reply.send({
                 name: 'Super+Vision API',
-                version: '2.0'
+                version: '3.0'
             });
             return next();
         });
@@ -60,10 +60,22 @@ export default class Router {
             (req, reply, next) => ZoneController.setControl(Socket, req, reply, next)
         );
 
+        App.get(
+            '/api/zone/:zone_id/control',
+            (req, reply, next) => idValidation(req, reply, next, 'zone_id', zones),
+            ZoneController.getControl
+        );
+
         App.put(
             '/api/zone/:zone_id/alarm',
             (req, reply, next) => idValidation(req, reply, next, 'zone_id', zones),
             (req, reply, next) => ZoneController.setAlarmState(Socket, req, reply, next)
+        );
+
+        App.get(
+            '/api/zone/:zone_id/alarm',
+            (req, reply, next) => idValidation(req, reply, next, 'zone_id', zones),
+            ZoneController.getAlarmState
         );
 
         Logger.info('All Super+Vision Routes Initialized successfully!');

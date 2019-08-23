@@ -119,4 +119,32 @@ export default class ZoneController {
         }
     }
 
+    static async getControl({
+        params: { zone_id }
+    }, reply, next) {
+        try {
+            var zone = parseInt(zone_id);
+            var data = await Zone.getControl({ zone }) || {};
+            reply.send(data);
+        } catch (ex) {
+            reply.send(ex)
+        } finally {
+            return next();
+        }
+    }
+    
+    static async getAlarmState({
+        params: { zone_id }
+    }, reply, next) {
+        try {
+            var zone = parseInt(zone_id);
+            var data = await Zone.getAlarmState({ zone }) || {};
+            reply.send(data);
+        } catch (ex) {
+            reply.send(ex)
+        } finally {
+            return next();
+        }
+    }
+
 }
