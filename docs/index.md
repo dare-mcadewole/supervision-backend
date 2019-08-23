@@ -2,7 +2,7 @@
 # SuperVision API Documentation v2.0
 ----
 
->Anti-Vandalism Supervisory Panel  
+Anti-Vandalism Supervisory Panel  
 (Remote Surveillance with System control)  
 
 ## API Endpoints
@@ -20,7 +20,10 @@
 
 | Action | Route | Method | Request Data | Response | Note(s) |
 | --- | --- | --- | --- | --- | --- |
-|Update sensor data | `zone/:zone_id` | `PUT` | ```{ sensor: 'PIR', state: true }``` | Same as request data (if successful) | `sensor` can be **PIR**, **DOPPLER** or **INTRUSION** and `state` can be **`true`** or **`false`**
+|Update sensor data | `zone/:zone_id` | `PUT` | ```{  
+sensor: 'PIR',  
+state: true  
+}``` | Same as request data (if successful) | `sensor` can be **PIR**, **DOPPLER** or **INTRUSION** and `state` can be **`true`** or **`false`**
 |Send video | `zone/:zone_id/video` | `POST` | ```{ frame: [image.jpg] }``` | ```{ msg: 'SUCCESS' }``` | None |
 | Get Control State | `zone/:zone_id/control` | `GET` | None | ```{ ALARM: true, PROTECT_ZONE: false, OVERRIDE: true, AUTO_PROTECT: false }``` | None |
 | Get Alarm State | `zone/:zone_id/alarm` | `GET` | None | ```{ state: true }``` | `state` specifies if the sound alarm button has been pressed, `true` if so and vice-versa |
@@ -30,5 +33,7 @@
 ## Author(s)
 ----  
 
-- Dare McAdewole
->Software Developer  [@dare_mcadewole](https://twitter.com/@dare_mcadewole)  [Gmail](mailto:dare.dev.adewole@gmail.com)
+- Dare McAdewole  
+Software Developer  
+[@dare_mcadewole](https://twitter.com/@dare_mcadewole)  
+[Gmail](mailto:dare.dev.adewole@gmail.com)
