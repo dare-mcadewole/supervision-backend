@@ -30,7 +30,7 @@
     "nedb-multi": "^1.2.2",
     "restify": "^8.3.3",
     "restify-cors-middleware": "^1.1.1",
-    "socket.io": "^2.2.0",
+    "socket.io": "^2.5.0",
     "thread-sleep": "^2.2.0"
   }
 }
